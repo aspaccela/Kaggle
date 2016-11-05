@@ -7,6 +7,7 @@ Created on Tue Sep 20 23:30:15 2016
 """
 
 import pandas as pd
+import numpy as np
 
 def dataTrain ():
     dataDF = pd.read_csv("./data/train.csv") 
@@ -36,7 +37,13 @@ def fillEmptyValuesEmbarked(dataDF):
 def fillEmptyValuesFare(dataDF):
     # Campo Age
     # TODO. Hay que dar un valor Fare como la media de la clase.
-    dataDF.Fare = dataDF.Fare.fillna(1)
+    if len(dataDF.Fare[ dataDF.Fare.isnull() ]) > 0:
+        median_fare = np.zeros(3)
+        for f in range(0,3):                                              # loop 0 to 2
+            median_fare[f] = dataDF[ dataDF.Pclass == f+1 ]['Fare'].dropna().median()
+        for f in range(0,3):                                              # loop 0 to 2
+            dataDF.loc[ (dataDF.Fare.isnull()) & (dataDF.Pclass == f+1 ), 'Fare'] = median_fare[f]
+            
     return dataDF
 
 #Drop non-util fields function from the dataset 

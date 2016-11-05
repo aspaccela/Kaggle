@@ -9,6 +9,7 @@ Main routine, which executes process from data munging to learning process.
 import TitanicFirst as tf
 import MachineLearningTraining as mlt
 import pandas as pd
+import csv as csv
 
 #%% Data loading
 print ("Loading Data")
@@ -25,3 +26,11 @@ print ("Adaptations executed")
 #%% We run training
 trainedData = mlt.makeLearningAndPredictions(analyzedDF, dataTestDF)
 survivingEstimations = pd.DataFrame({'PassengerId': dataTestDF.PassengerId, 'SurvivedEstimation':pd.Series(trainedData)})
+
+#%% We save results
+predictions_file = open("data/myfirstforest.csv", "w")
+open_file_object = csv.writer(predictions_file)
+open_file_object.writerow(["PassengerId","Survived"])
+open_file_object.writerows(zip(survivingEstimations.PassengerId, survivingEstimations.SurvivedEstimation))
+predictions_file.close()
+print ('Done.')

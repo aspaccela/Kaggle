@@ -27,9 +27,9 @@ def makeDecissionTreeLearning(dataDF):
     dtr = dtr.fit(dtrFeatures,dtrValues.values.ravel())
     return dtr
     
-def predictDecisionTreeLearning(dtRegressor, testDF):
+def predictDecisionTreeLearning(dtClasif, testDF):
     #Hace la predicción con los datos de Test
-    return dtRegressor.predict(testDF)
+    return dtClasif.predict(testDF)
     
 def makeLearningAndPredictions(trainDF, testDF):
     #Realiza el entreno y la predicción
