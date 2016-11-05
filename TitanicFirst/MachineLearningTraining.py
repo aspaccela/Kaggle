@@ -7,7 +7,8 @@ Created on Sat Oct 22 09:22:17 2016
 Python code for learning from data.
 """
 
-from sklearn import tree
+from sklearn import ensemble
+import numpy as np
 
 def sliceAsFeatures(dataDF):
     #Se queda solo con las features interesantes, cambiando sex por 1/0
@@ -20,10 +21,10 @@ def sliceAsValues(dataDF):
 
 def makeDecissionTreeLearning(dataDF):
     #Devuelve el DecisionTreeRegressor entrenado
-    dtr=tree.Ra()
+    dtr=ensemble.RandomForestClassifier(n_estimators=100, criterion='entropy')
     dtrValues= sliceAsValues(dataDF)
     dtrFeatures= sliceAsFeatures(dataDF)
-    dtr = dtr.fit(dtrFeatures,dtrValues)
+    dtr = dtr.fit(dtrFeatures,dtrValues.values.ravel())
     return dtr
     
 def predictDecisionTreeLearning(dtRegressor, testDF):
